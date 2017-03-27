@@ -1,17 +1,7 @@
 
-[最近开始玩GitHub欢迎Starts, Forks, Follow](https://github.com/CPUdream/Android-programming-specification)
-
-## Android编程规范
-本文会一直更新,后续结合开源项目写一个优雅的项目————看在上帝的份上，维护一份编程规范
-附一份自己的AndroidStudio配置文件（当前文件夹下的setting.jar文件）[点击查看有哪些配置](https://github.com/CPUdream/Android-programming-specification/blob/master/SettingReadMe.md)
-### 入门
-本规范参考了大量前人的成果.但又不局限于此。本规范没有完全按照Java推荐的命名规则而来，而是结合了自身的实际和许多.NET规范中很多优秀的经验而制定。
-
 ### 定义和约定
 
-1. Pascal标记法
-第1个字符大写，其后每个单词的第1个字母大写
-2. camel标记法
+1. 驼峰命名法
 第1个字符小写，其后每个单词的第1个字母大写
 
 首先,命名总的原则是名称应该说明“什么”而不是“如何”, 从命名中可以直观看懂其定义和用途（否则必须增加注释说明）；命名要足够长以同其它变量相分别,简要描述其意义,但要足够短以避免太长；类，方法，变量不得用大小写来区分各种实体（eclipse中，在同一目录下，默认排斥以大小写来区分的类名、包名）以下是几个方面的命名规范。
@@ -33,7 +23,7 @@ util: 工具类
 #### 资源文件
 资源文件名必须由小写字母和下划线组成（lowercase_underscore）
 ##### Drawable文件
-资源文件名必须由小写字母和下划线组成（lowercase_underscore）
+资源文件名必须由小写字母和下划线组成（ic_login）
 前缀{_控件}{_范围}{_后缀}，控件、范围、后缀可选，但控件和范围至少要有一个。
 
 图标类，添加ic前缀
@@ -110,12 +100,12 @@ shrink_to_middle，中间缩小
 资源文件必须是复数(plural). 例如：strings.xml, styles.xml, colors.xml, dimens.xml, attrs.xml
 
 ### 代码规范
-#### Java代码规范
+#### Java代码规范（尤其是业务逻辑比较复杂的类和方法，一定要添加必要的注释）
 如果按照下面格式书写代码可以形成Javadoc。javadoc是Sun公司提供的一个技术，它从程序源代码中抽取类、方法、成员等注释形成一个和源代码配套的API帮助文档。所以必须遵守。
 ##### 版权申明
 每个文件顶部应该有一个版权申明，下面是package 和 import声明它们三个代码块之间用空行格开(blank line), 最后才是class 或者 interface 申明
 
-### Import顺序
+### Import顺序（尽量保持）
 Import导包AndroidStudio已经设置好了，但是这里要强调一下自己手动导包事项
 + 关于Android系统相关的包必须在早上面
 + 接下来是Java相关的包
@@ -127,12 +117,11 @@ Import导包AndroidStudio已经设置好了，但是这里要强调一下自己�
 字段应该被定义在文件的顶部，遵守驼峰命名法他们还必须遵守下面的命名规范
 Private , non-static字段必须以m开头
 Private, static字段必须以s开头
-其它类型字段开始以小写字母开头不能加m, s  //有待修改
+其它类型字段开始以小写字母m开头
 Static final字段必须是大写加下划线(ALL_CAPS_WITH_UNDERSCORES)
 ```java
 public class MyClass {
     public static final int SOME_CONSTANT = 42;
-    public int publicField;
     private static MyClass sSingleton;
     int mPackagePrivate;
     private int mPrivate;
@@ -148,33 +137,7 @@ public class MyClass {
 | `String url`     | `String URL`     |
 | `long id`        | `long ID`        |
 
-### 标准大括号
-这个主要是针对于学过C语言的国内用户，由于大学课程大部分用的谭浩强的C程序设计，代码风格写的一塌糊涂，我只想说真正的C语言发明者写的这本书 《C程序设计语言》被评为编程必看书籍。大学教育渣！！！！
-正确写法如下：
-```java
-class MyClass {
-    int func() {
-        if (something) {
-            // ...
-        } else if (somethingElse) {
-            // ...
-        } 
-    }
-}
-```
-if语句必须写成下面的
-if (condition) {
-    body();
-}
-不能写成下面的形式
-```java
-if (condition) body();
-```
-更不能写成下面的形式
-```java
-if (condition)
-    body();  // bad!
-```
+
 ### 限制行长度
 Google官方规定一行不能超过100个字符,AndroidStudio不要担心这个事了，AndroidStudio中大家肯定会看到一条细细的限制线。但是下面两种情况必须是例外：
 + 如果注释中包括一个URL,这个URL长度大于100也不可以分割成两行，为了方便复制、黏贴
@@ -194,7 +157,7 @@ Instrument i =
 
 ### XML代码规范
 #### 标签自我关闭
-当一个XML元素没有任何内容时，必须自己关闭标签
+当一个XML元素没有任何内容时，尽量自己关闭标签
 正确写法如下：
 ```xml
 <TextView
@@ -216,10 +179,9 @@ Instrument i =
 
 | Element            | Prefix            |
 | -----------------  | ----------------- |
-| `TextView`           | `text_`             |
-| `ImageView`          | `image_`            |
-| `Button`             | `button_`           |
-| `Menu`               | `menu_`             |
+| `TextView`           | `tv_`            |
+| `ImageView`          | `im_`            |
+| `Button`             | `btn_`           |
 举两个例子：
 ```xml
 <ImageView
@@ -246,49 +208,8 @@ Instrument i =
 | `action_`            | An action such as "Save" or "Create"  |
 
 ### Styles and Themes
-好像和类的命名一样，后续更新
+与类的命名一样
+### 单例
+使用双重校验锁或者静态内部类的方式
 
-### 属性顺序
 
-1. View id
-2. Style
-3. Layout width and layout height
-4. 其他布局属性，按字母排序
-5. 其他属性，按字母排序
-
-### 后台接口要求
-接口不可能一成不变，在不停迭代中，总会发生变化。接口的变化一般会有几种：
-数据的变化，比如增加了旧版本不支持的数据类型
-参数的变化，比如新增了参数
-接口的废弃，不再使用该接口了
-为了适应这些变化，必须得做接口版本的设计。实现上，一般有两种做法：
-
-每个接口有各自的版本，一般为接口添加个version的参数。
-大部分情况下会采用第一种方式，当某一个接口有变动时，在这个接口上叠加版本号，并兼容旧版本。App的新版本开发传参时则将传入新版本的version。
-
-有时候，一个接口的变动还会影响到其他接口，但做的时候不一定能发现。因此，最好还要有一套完善的测试机制保证每次接口变更都能测试到所有相关层面。
-
-{"code": "0", "msg": "success"}
-{"code": "0", "msg": "success", "obj":{...}}
-{"code": "0", "msg": "success", "objList":[{...}, {...}], "currentPage": 1, "pageSize": 20, "maxCount": 2, "maxPage": 1}
-code: 返回码，0表示成功，非0表示各种不同的错误
-message: 描述信息，成功时为"success"，错误时则是错误信息
-data: 成功时返回的数据，类型为对象或数组
-不同错误需要定义不同的返回码，属于客户端的错误和服务端的错误也要区分，比如1XX表示客户端的错误，2XX表示服务端的错误。这里举几个例子：
-
-+ 0：成功
-+ 100：请求错误
-+ 101：缺少appKey
-+ 102：缺少签名
-+ 103：缺少参数
-+ 200：服务器出错
-+ 201：服务不可用
-+ 202：服务器正在重启
-
-### 建议
-以下内容为建议，由于个人习惯我希望在项目完结时可以在项目之下建立一个doc文件夹把项目需求文件放进去。当然在该文件夹下能用Markdown写一个说明文档最好，文档名字都想好了叫ReadMe.md。该文档包括项目中使用到的最厉害技术、最好的效果也就是GIF图片，还包括项目存在的不足待改进的地方。
-
-### 参考文献
-[Android开源编程规范]https://source.android.com/source/code-style.html
-
-[Java编程规范说明]
